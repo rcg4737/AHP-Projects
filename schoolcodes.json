@@ -1,0 +1,53 @@
+{"schools": [
+   
+  {
+    "SchoolIdLength": 10,
+    "SchoolCode":[
+        "IU",
+        "IUM",
+        "IUD"
+        ]
+  },  
+  {
+    "SchoolIdLength": 9,
+    "SchoolCode":[
+        "montana",
+        "baylor",
+        "msubillings",
+        "gfcmsu",
+        "msun",
+        "stedwards",
+        "Uark",
+        "UCLA",
+        "UCSF",
+        "WIU"
+    ]
+  },
+  {
+    "SchoolIdLength": 8,
+    "SchoolCode":[
+        "csm"
+    ]
+  },
+  {
+    "SchoolIdLength": 7,
+    "SchoolCode":[
+        "DBU",
+        "SAIC",
+        "Dean",
+        "lincoln",
+        "MCC",
+        "RUSHN",
+        "SHSU",
+        "txwesi",
+        "TWU",
+        "trinity",
+        "UCHC",
+        "UCSB",
+        "UCSC",
+        "uhdt",
+        "PacificU"
+    ]
+  }
+]
+}
