@@ -1,0 +1,69 @@
+select    s.school_dsc,  i.gender, count(*) as 'Count'
+from    academichealth.dbo.insured i
+        inner join academichealth.dbo.school s on s.school_id = i.school_id
+inner join academichealth.dbo.coverage_dtl d on d.insured_id = i.insured_id
+where    isnull(i.gender,'') not in ('M','F','X')
+and GETDATE() between d.coverage_eff_dt and d.term_dt
+group by s.school_dsc, i.gender
+order by s.school_dsc, i.gender
+
+
+
+
+select top 5 *
+from academichealth.dbo.insured;
+
+select top 5 *
+from academichealth.dbo.school;
+
+
+select DATEDIFF(DAY,'1921-01-01 00:00:00.000','1920-01-01 00:00:00.000')
+ 
+
+
+
+
+select    s.school_dsc,  count(*) as Invalid_DOB
+from    academichealth.dbo.insured i
+        inner join academichealth.dbo.school s on s.school_id = i.school_id
+where    (--isdate(i.date_of_birth) = 0
+        DATEDIFF(DAY,ISNULL(i.date_of_birth,'1950-01-01 00:00:00.000'),'1920-01-01 00:00:00.000') > 0)
+and s.school_dsc = 'Purdue University'
+group by s.school_dsc
+order by Invalid_DOB desc
+
+
+
+
+-- Search for DOB earlier than with active coverage
+ 
+select  s.school_dsc, count(*) as early_DOB
+from    academichealth.dbo.insured i
+        inner join academichealth.dbo.school s on s.school_id = i.school_id
+inner join academichealth.dbo.coverage_dtl d on d.insured_id = i.insured_id
+where   (i.date_of_birth is not null and i.date_of_birth < '1920-01-01 00:00:00.000')
+and GETDATE() between d.coverage_eff_dt and d.term_dt
+group by i.date_of_birth, s.school_dsc
+
+
+
+-- Search for null DOB with active coverage
+select    s.school_dsc, count(*) as NULL_DOB
+from    academichealth.dbo.insured i
+        inner join academichealth.dbo.school s on s.school_id = i.school_id
+inner join academichealth.dbo.coverage_dtl d on d.insured_id = i.insured_id
+where    i.date_of_birth is null
+and GETDATE() between d.coverage_eff_dt and d.term_dt
+group by i.date_of_birth, s.school_dsc
+order by NULL_DOB desc
+
+
+
+
+select    s.school_dsc, i.date_of_birth, count(*) as Count
+from    academichealth.dbo.insured  i
+        inner join academichealth.dbo.school s on s.school_id = i.school_id
+WHERE i.date_of_birth is not null and isdate(i.date_of_birth) = 1 and ISNULL(i.date_of_birth,'1900-01-01 00:00:00.000') > '1920-01-01 00:00:00.000'
+group by s.school_dsc, i.date_of_birth 
+having count(*) > 50
+order by Count desc
